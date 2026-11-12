@@ -1,0 +1,85 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1794382003308,
+  "projectRoot": "/Users/ian/private/living_city/backend",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": "",
+    "runtime": ""
+  },
+  "build": {
+    "buildCommand": "",
+    "testCommand": "",
+    "lintCommand": "",
+    "devCommand": "",
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": "",
+    "fileOrganization": ""
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": ".env",
+      "accessCount": 1.9999530371722904,
+      "lastAccessed": 1794384545217,
+      "type": "file"
+    },
+    {
+      "path": "app/api/deps.py",
+      "accessCount": 1.999951336475806,
+      "lastAccessed": 1794384545472,
+      "type": "file"
+    },
+    {
+      "path": "app/db/session.py",
+      "accessCount": 1.9999526200200548,
+      "lastAccessed": 1794384545335,
+      "type": "file"
+    },
+    {
+      "path": "app/core/config.py",
+      "accessCount": 1.9999547539160152,
+      "lastAccessed": 1794384545100,
+      "type": "file"
+    },
+    {
+      "path": "requirements.txt",
+      "accessCount": 1.9999558609766155,
+      "lastAccessed": 1794384544982,
+      "type": "file"
+    },
+    {
+      "path": "app/models/world_metric.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389169390,
+      "type": "file"
+    },
+    {
+      "path": "app/models/map_chunk.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389169503,
+      "type": "file"
+    }
+  ],
+  "userDirectives": [
+    {
+      "timestamp": 1794381954005,
+      "directive": ".omc 디렉토리는 반드시 backend 디렉토리 최상단(/Users/ian/private/living_city/backend/.omc)에만 존재해야 한다. 소스 코드가 있는 위치(app/, tests/, alembic/ 및 그 하위 등)에는 절대로 .omc가 생성되면 안 된다.",
+      "context": "backend 구현 작업 시 OMC 상태/스펙/플랜/핸드오프 등 모든 .omc 산출물은 backend 루트의 .omc 하나에만 기록한다. 작업 디렉토리가 하위 폴더여도 workingDirectory를 backend 루트로 지정한다.",
+      "source": "explicit",
+      "priority": "high"
+    }
+  ]
+}

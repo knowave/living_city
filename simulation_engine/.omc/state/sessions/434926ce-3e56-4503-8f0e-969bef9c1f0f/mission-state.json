@@ -1,0 +1,143 @@
+{
+  "updatedAt": "2026-11-11T09:34:26.814Z",
+  "missions": [
+    {
+      "id": "session:434926ce-3e56-4503-8f0e-969bef9c1f0f:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-11-11T08:18:08.243Z",
+      "updatedAt": "2026-11-11T09:34:26.814Z",
+      "status": "done",
+      "workerCount": 6,
+      "taskCounts": {
+        "total": 6,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 0,
+        "completed": 6,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "worker-skeleton:aworker",
+          "role": "worker-skeleton",
+          "ownership": "aworker-skeleton-d2c9976749ee4677",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:34:26.814Z"
+        },
+        {
+          "name": "worker-docs-engine:aworker",
+          "role": "worker-docs-engine",
+          "ownership": "aworker-docs-engine-f579dbf692bc01aa",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T08:18:33.526Z"
+        },
+        {
+          "name": "worker-docs-rules:aworker",
+          "role": "worker-docs-rules",
+          "ownership": "aworker-docs-rules-43afd2afab3b37d6",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T08:18:25.312Z"
+        },
+        {
+          "name": "w-entities:aw-enti",
+          "role": "w-entities",
+          "ownership": "aw-entities-b7f0292bc70975d2",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:30:51.256Z"
+        },
+        {
+          "name": "w-economy:aw-econ",
+          "role": "w-economy",
+          "ownership": "aw-economy-4414cb919cf7bf38",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:30:53.451Z"
+        },
+        {
+          "name": "w-records:aw-reco",
+          "role": "w-records",
+          "ownership": "aw-records-7d989a35fa6fbb11",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:30:59.571Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-start:aw-entities-b7f0292bc70975d2:2026-11-11T09:30:22.054Z",
+          "at": "2026-11-11T09:30:22.054Z",
+          "kind": "update",
+          "agent": "w-entities:aw-enti",
+          "detail": "started w-entities:aw-enti",
+          "sourceKey": "session-start:aw-entities-b7f0292bc70975d2"
+        },
+        {
+          "id": "session-start:aw-economy-4414cb919cf7bf38:2026-11-11T09:30:22.085Z",
+          "at": "2026-11-11T09:30:22.085Z",
+          "kind": "update",
+          "agent": "w-economy:aw-econ",
+          "detail": "started w-economy:aw-econ",
+          "sourceKey": "session-start:aw-economy-4414cb919cf7bf38"
+        },
+        {
+          "id": "session-start:aw-records-7d989a35fa6fbb11:2026-11-11T09:30:22.145Z",
+          "at": "2026-11-11T09:30:22.145Z",
+          "kind": "update",
+          "agent": "w-records:aw-reco",
+          "detail": "started w-records:aw-reco",
+          "sourceKey": "session-start:aw-records-7d989a35fa6fbb11"
+        },
+        {
+          "id": "session-stop:aw-entities-b7f0292bc70975d2:2026-11-11T09:30:51.256Z",
+          "at": "2026-11-11T09:30:51.256Z",
+          "kind": "completion",
+          "agent": "w-entities:aw-enti",
+          "detail": "completed",
+          "sourceKey": "session-stop:aw-entities-b7f0292bc70975d2"
+        },
+        {
+          "id": "session-stop:aw-economy-4414cb919cf7bf38:2026-11-11T09:30:53.451Z",
+          "at": "2026-11-11T09:30:53.451Z",
+          "kind": "completion",
+          "agent": "w-economy:aw-econ",
+          "detail": "completed",
+          "sourceKey": "session-stop:aw-economy-4414cb919cf7bf38"
+        },
+        {
+          "id": "session-stop:aw-records-7d989a35fa6fbb11:2026-11-11T09:30:59.571Z",
+          "at": "2026-11-11T09:30:59.571Z",
+          "kind": "completion",
+          "agent": "w-records:aw-reco",
+          "detail": "completed",
+          "sourceKey": "session-stop:aw-records-7d989a35fa6fbb11"
+        },
+        {
+          "id": "session-stop:af2e94170001cbd28:2026-11-11T09:34:26.814Z",
+          "at": "2026-11-11T09:34:26.814Z",
+          "kind": "completion",
+          "agent": "worker-skeleton:aworker",
+          "detail": "completed",
+          "sourceKey": "session-stop:af2e94170001cbd28"
+        }
+      ]
+    }
+  ]
+}

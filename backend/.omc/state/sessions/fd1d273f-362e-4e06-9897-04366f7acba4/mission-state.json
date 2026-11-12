@@ -1,0 +1,187 @@
+{
+  "updatedAt": "2026-11-11T09:35:42.319Z",
+  "missions": [
+    {
+      "id": "session:fd1d273f-362e-4e06-9897-04366f7acba4:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-11-11T08:08:06.468Z",
+      "updatedAt": "2026-11-11T09:35:42.319Z",
+      "status": "done",
+      "workerCount": 8,
+      "taskCounts": {
+        "total": 8,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 0,
+        "completed": 8,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "docs-worker:adocs-w",
+          "role": "docs-worker",
+          "ownership": "adocs-worker-6c5852c80063144a",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:35:42.319Z"
+        },
+        {
+          "name": "models-worker:amodels",
+          "role": "models-worker",
+          "ownership": "amodels-worker-fbadf73dbc751b6d",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T08:09:59.147Z"
+        },
+        {
+          "name": "infra-worker:ainfra-",
+          "role": "infra-worker",
+          "ownership": "ainfra-worker-b0cf7beb24efaeb8",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T08:09:58.001Z"
+        },
+        {
+          "name": "docs-small-worker:adocs-s",
+          "role": "docs-small-worker",
+          "ownership": "adocs-small-worker-f7f20f1a6bb448d0",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:27:24.618Z"
+        },
+        {
+          "name": "docs-db-worker:adocs-d",
+          "role": "docs-db-worker",
+          "ownership": "adocs-db-worker-b3f63cdb77c01e6b",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:27:26.428Z"
+        },
+        {
+          "name": "metrics-map-worker:ametric",
+          "role": "metrics-map-worker",
+          "ownership": "ametrics-map-worker-8e5104faaa7268a9",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:27:25.066Z"
+        },
+        {
+          "name": "ledger-worker:aledger",
+          "role": "ledger-worker",
+          "ownership": "aledger-worker-f6ae224d24619579",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:27:25.490Z"
+        },
+        {
+          "name": "align-worker:aalign-",
+          "role": "align-worker",
+          "ownership": "aalign-worker-bbfd451cb869988e",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-11-11T09:27:26.329Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-start:adocs-small-worker-f7f20f1a6bb448d0:2026-11-11T09:27:22.787Z",
+          "at": "2026-11-11T09:27:22.787Z",
+          "kind": "update",
+          "agent": "docs-small-worker:adocs-s",
+          "detail": "started docs-small-worker:adocs-s",
+          "sourceKey": "session-start:adocs-small-worker-f7f20f1a6bb448d0"
+        },
+        {
+          "id": "session-start:ametrics-map-worker-8e5104faaa7268a9:2026-11-11T09:27:23.176Z",
+          "at": "2026-11-11T09:27:23.176Z",
+          "kind": "update",
+          "agent": "metrics-map-worker:ametric",
+          "detail": "started metrics-map-worker:ametric",
+          "sourceKey": "session-start:ametrics-map-worker-8e5104faaa7268a9"
+        },
+        {
+          "id": "session-start:aalign-worker-bbfd451cb869988e:2026-11-11T09:27:23.239Z",
+          "at": "2026-11-11T09:27:23.239Z",
+          "kind": "update",
+          "agent": "align-worker:aalign-",
+          "detail": "started align-worker:aalign-",
+          "sourceKey": "session-start:aalign-worker-bbfd451cb869988e"
+        },
+        {
+          "id": "session-stop:adocs-small-worker-f7f20f1a6bb448d0:2026-11-11T09:27:24.618Z",
+          "at": "2026-11-11T09:27:24.618Z",
+          "kind": "completion",
+          "agent": "docs-small-worker:adocs-s",
+          "detail": "completed",
+          "sourceKey": "session-stop:adocs-small-worker-f7f20f1a6bb448d0"
+        },
+        {
+          "id": "session-stop:ametrics-map-worker-8e5104faaa7268a9:2026-11-11T09:27:25.066Z",
+          "at": "2026-11-11T09:27:25.066Z",
+          "kind": "completion",
+          "agent": "metrics-map-worker:ametric",
+          "detail": "completed",
+          "sourceKey": "session-stop:ametrics-map-worker-8e5104faaa7268a9"
+        },
+        {
+          "id": "session-stop:aledger-worker-f6ae224d24619579:2026-11-11T09:27:25.490Z",
+          "at": "2026-11-11T09:27:25.490Z",
+          "kind": "completion",
+          "agent": "ledger-worker:aledger",
+          "detail": "completed",
+          "sourceKey": "session-stop:aledger-worker-f6ae224d24619579"
+        },
+        {
+          "id": "session-stop:aalign-worker-bbfd451cb869988e:2026-11-11T09:27:26.329Z",
+          "at": "2026-11-11T09:27:26.329Z",
+          "kind": "completion",
+          "agent": "align-worker:aalign-",
+          "detail": "completed",
+          "sourceKey": "session-stop:aalign-worker-bbfd451cb869988e"
+        },
+        {
+          "id": "session-stop:adocs-db-worker-b3f63cdb77c01e6b:2026-11-11T09:27:26.428Z",
+          "at": "2026-11-11T09:27:26.428Z",
+          "kind": "completion",
+          "agent": "docs-db-worker:adocs-d",
+          "detail": "completed",
+          "sourceKey": "session-stop:adocs-db-worker-b3f63cdb77c01e6b"
+        },
+        {
+          "id": "session-stop:ae7353de67607aeb1:2026-11-11T09:30:43.410Z",
+          "at": "2026-11-11T09:30:43.410Z",
+          "kind": "completion",
+          "agent": "docs-worker:adocs-w",
+          "detail": "completed",
+          "sourceKey": "session-stop:ae7353de67607aeb1"
+        },
+        {
+          "id": "session-stop:a3cd34b655d5195ca:2026-11-11T09:35:42.319Z",
+          "at": "2026-11-11T09:35:42.319Z",
+          "kind": "completion",
+          "agent": "docs-worker:adocs-w",
+          "detail": "completed",
+          "sourceKey": "session-stop:a3cd34b655d5195ca"
+        }
+      ]
+    }
+  ]
+}

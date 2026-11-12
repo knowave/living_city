@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "entries": {
+    "79a93d4a2f8f50b95f852280616242fee1855dc99a3c75211917f55e72e95fae": {
+      "last_emitted_at_ms": 1794389545998,
+      "message": "Use parallel execution for independent tasks. Use run_in_background for long operations (npm install, builds, tests)."
+    },
+    "de2296999aa7ca3736b1eb75ac67656f897cc5f4265e144fe6ecb114a3438656": {
+      "last_emitted_at_ms": 1794389157374,
+      "message": "Spawning agent: oh-my-claudecode:executor (sonnet) | Task: Existing model alignment + tests (sonnet)"
+    },
+    "62bb1d5d87548e8bffcefc810c89df67c66603ecfd0a32ef5abfdee62c9191b8": {
+      "last_emitted_at_ms": 1794389157369,
+      "message": "Spawning agent: oh-my-claudecode:executor (sonnet) | Task: Ledger models (sonnet)"
+    },
+    "466399dafa2d20f60587180bad0a07358eb7f2bce724df0ff682f038ad33f5ad": {
+      "last_emitted_at_ms": 1794389055755,
+      "message": "Read multiple files in parallel when possible for faster analysis."
+    },
+    "37079d19a3dcc3d729349a951cb7d5a9e6339ddea5ea5cac5c86811a4870142f": {
+      "last_emitted_at_ms": 1794389053585,
+      "message": "Spawning agent: oh-my-claudecode:executor (sonnet) | Task: DB + economy docs (sonnet)"
+    },
+    "0f4d93397944e6224aa64f3e9ed75b44a1a11d2457be5981987ce563676f487e": {
+      "last_emitted_at_ms": 1794389053581,
+      "message": "Spawning agent: oh-my-claudecode:executor (haiku) | Task: Small docs edits (haiku)"
+    },
+    "445ed27a3872b681d98190bae61ccb84954e1bc4e140df5370be958dee776b3a": {
+      "last_emitted_at_ms": 1794388996494,
+      "message": "Verify changes work after editing. Test functionality before marking complete."
+    }
+  },
+  "updated_at": "2026-11-11T09:32:25.998Z"
+}

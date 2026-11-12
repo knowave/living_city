@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "projectRoot": "/Users/ian/private/living_city/frontend",
+  "techStack": {},
+  "build": {},
+  "conventions": {},
+  "structure": {},
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [],
+  "userDirectives": [
+    {
+      "timestamp": 1794382603883,
+      "directive": "frontend 구현 시 .omc 디렉토리는 반드시 frontend 디렉토리 최상단(/Users/ian/private/living_city/frontend/.omc)에만 유지한다. src/ 등 소스 코드가 있는 위치에는 .omc가 절대 존재해서는 안 된다.",
+      "context": "OMC 상태·스펙·플랜·핸드오프·노트패드 등 모든 .omc 산출물은 frontend 루트의 .omc 하위에만 작성. 서브디렉토리(src/, public/ 등)에서 작업하더라도 workingDirectory는 frontend 루트로 지정할 것.",
+      "source": "explicit",
+      "priority": "high"
+    }
+  ]
+}

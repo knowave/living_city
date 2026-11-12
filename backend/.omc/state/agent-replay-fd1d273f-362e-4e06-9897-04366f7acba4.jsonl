@@ -1,0 +1,42 @@
+{"t":0,"agent":"a183800","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"oh-my-claudecode:team"}
+{"t":0,"agent":"adocs-w","agent_type":"docs-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"adocs-w","agent_type":"docs-worker","event":"agent_stop","success":true,"duration_ms":19654}
+{"t":0,"agent":"amodels","agent_type":"models-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ainfra-","agent_type":"infra-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ab06b02","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"ainfra-","agent_type":"infra-worker","event":"agent_stop","success":true,"duration_ms":19230}
+{"t":0,"agent":"a160529","agent_type":"models-worker","event":"agent_stop","success":true,"duration_ms":26223}
+{"t":0,"agent":"amodels","agent_type":"models-worker","event":"agent_stop","success":true,"duration_ms":42320}
+{"t":0,"agent":"adocs-w","agent_type":"docs-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ainfra-","agent_type":"infra-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"amodels","agent_type":"models-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ainfra-","agent_type":"infra-worker","event":"agent_stop","success":true,"duration_ms":2074}
+{"t":0,"agent":"adocs-w","agent_type":"docs-worker","event":"agent_stop","success":true,"duration_ms":2666}
+{"t":0,"agent":"amodels","agent_type":"models-worker","event":"agent_stop","success":true,"duration_ms":3169}
+{"t":0,"agent":"a22c096","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"ac5a445","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"deep-interview"}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"oh-my-claudecode:team"}
+{"t":0,"agent":"adocs-s","agent_type":"docs-small-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"adocs-d","agent_type":"docs-db-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"adocs-s","agent_type":"docs-small-worker","event":"agent_stop","success":true,"duration_ms":12862}
+{"t":0,"agent":"adocs-d","agent_type":"docs-db-worker","event":"agent_stop","success":true,"duration_ms":44589}
+{"t":0,"agent":"ametric","agent_type":"metrics-map-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aledger","agent_type":"ledger-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aalign-","agent_type":"align-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ametric","agent_type":"metrics-map-worker","event":"agent_stop","success":true,"duration_ms":14255}
+{"t":0,"agent":"aledger","agent_type":"ledger-worker","event":"agent_stop","success":true,"duration_ms":31861}
+{"t":0,"agent":"aalign-","agent_type":"align-worker","event":"agent_stop","success":true,"duration_ms":52499}
+{"t":0,"agent":"adocs-d","agent_type":"docs-db-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aledger","agent_type":"ledger-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"adocs-s","agent_type":"docs-small-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ametric","agent_type":"metrics-map-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aalign-","agent_type":"align-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"adocs-s","agent_type":"docs-small-worker","event":"agent_stop","success":true,"duration_ms":1831}
+{"t":0,"agent":"ametric","agent_type":"metrics-map-worker","event":"agent_stop","success":true,"duration_ms":1890}
+{"t":0,"agent":"aledger","agent_type":"ledger-worker","event":"agent_stop","success":true,"duration_ms":2789}
+{"t":0,"agent":"aalign-","agent_type":"align-worker","event":"agent_stop","success":true,"duration_ms":3090}
+{"t":0,"agent":"adocs-d","agent_type":"docs-db-worker","event":"agent_stop","success":true,"duration_ms":4146}
+{"t":0,"agent":"ae7353d","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"a3cd34b","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}

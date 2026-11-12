@@ -1,0 +1,3 @@
+- 2026-11-12 doc-sync: one haiku worker (sync-backend) refused to write its change-log file, citing its role rules; the lead had to save the log it relayed.
+- 2026-11-12 doc-sync: the system python3 is 3.9.6, but simulation_engine needs >=3.12 (StrEnum); the plain `python3 -m unittest` command fails.
+- 2026-11-12 doc-sync: SendMessage to a busy worker arrived after it had already reported done, so a duplicate worker was spawned for the same file (no conflict).

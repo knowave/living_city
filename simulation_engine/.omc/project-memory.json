@@ -1,0 +1,79 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1794383868951,
+  "projectRoot": "/Users/ian/private/living_city/simulation_engine",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": "",
+    "runtime": ""
+  },
+  "build": {
+    "buildCommand": "",
+    "testCommand": "",
+    "lintCommand": "",
+    "devCommand": "",
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": "",
+    "fileOrganization": ""
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": "src/simulation_engine/events/models.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389449923,
+      "type": "file"
+    },
+    {
+      "path": "src/simulation_engine/world/snapshot.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389450044,
+      "type": "file"
+    },
+    {
+      "path": "src/simulation_engine/world/map_chunk.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389450162,
+      "type": "file"
+    },
+    {
+      "path": "src/simulation_engine/metrics/models.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389450291,
+      "type": "file"
+    },
+    {
+      "path": "src/simulation_engine/metrics/__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389450517,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_records.py",
+      "accessCount": 1,
+      "lastAccessed": 1794389450637,
+      "type": "file"
+    }
+  ],
+  "userDirectives": [
+    {
+      "timestamp": 1794383868951,
+      "directive": ".omc 디렉토리는 반드시 simulation_engine 디렉토리 최상단(/Users/ian/private/living_city/simulation_engine/.omc)에만 존재해야 한다. 소스 코드가 있는 위치(소스 디렉토리 및 그 하위)에는 절대로 .omc가 생성되면 안 된다.",
+      "context": "simulation_engine 구현 작업 시 OMC 상태/스펙/플랜/핸드오프 등 모든 .omc 산출물은 simulation_engine 루트의 .omc 하나에만 기록한다. 작업 디렉토리가 하위 폴더여도 workingDirectory를 simulation_engine 루트로 지정한다.",
+      "source": "explicit",
+      "priority": "high"
+    }
+  ]
+}
