@@ -199,42 +199,43 @@ CHECK: `chunk_x >= 0`, `chunk_y >= 0`, `chunk_size = 32`, `schema_version >= 1`,
 
 현재 `backend/app/models/*.py`가 만드는 스키마(10.3, 10.4의 모든 컬럼·제약)를 **Living City Database Schema — Implemented Baseline**으로 둔다. Baseline은 그대로 유지하고, 아래 세 항목만 우선 검토한다.
 
-> 근거: 2026-11-12, 임시 DB에 `DB_AUTO_SYNC`로 스키마를 생성하고 psql로 직접 삽입해 확인했다. "제안 제약"은 같은 DB에서 생성·동작을 확인한 뒤 롤백했다. 모델 코드에는 아직 반영하지 않았다.
+> 근거: 2026-11-12, 임시 DB에 `DB_AUTO_SYNC`로 스키마를 생성하고 psql로 직접 삽입해 확인했다. "제안 제약"은 같은 DB에서 생성·동작을 확인한 뒤 롤백했다. 2026-11-12에 아래 제약을 `backend/app/models`에 반영했다 (모델 반영, 코드 기준).
 
 ### 1. Employments 고유성
 
-- 현재: 고유 제약은 `(world_id, id)`뿐이다. 한 시민에게 두 기업의 활성 고용을 동시에 넣어도 DB가 받아들인다. 도메인 규칙 "한 시민은 동시에 하나의 활성 고용 관계만 가진다"([04-business.md](../02-domain/04-business.md))를 DB가 강제하지 못한다.
-- 제안 제약:
-  - `CREATE UNIQUE INDEX uq_employments_active_citizen ON employments (world_id, citizen_id) WHERE terminated_tick IS NULL`
-  - `CHECK ((status = 'ACTIVE') = (terminated_tick IS NULL))`: 이 CHECK가 없으면 `status='TERMINATED'`이면서 `terminated_tick`이 NULL인 행이 활성 행으로 취급되어 재고용을 막는다.
-- 중복 데이터가 이미 있으면 인덱스 생성이 실패한다. 적용 전에 중복을 정리해야 한다.
+- 반영 전: 고유 제약은 `(world_id, id)`뿐이었다. 한 시민에게 두 기업의 활성 고용을 동시에 넣어도 DB가 받아들였다. 도메인 규칙 "한 시민은 동시에 하나의 활성 고용 관계만 가진다"([04-business.md](../02-domain/04-business.md))를 DB가 강제하지 못했다.
+- 반영된 제약 (코드 기준):
+  - `uq_employments_world_citizen_active`: unique partial index `(world_id, citizen_id) WHERE terminated_tick IS NULL`
+  - `ck_employments_status_terminated`: `CHECK ((status = 'ACTIVE') = (terminated_tick IS NULL))`. 이 CHECK가 없으면 `status='TERMINATED'`이면서 `terminated_tick`이 NULL인 행이 활성 행으로 취급되어 재고용을 막는다.
+- 중복 데이터가 이미 있으면 인덱스 생성이 실패한다. 기존 DB에 적용하기 전에 중복을 정리해야 한다.
 
 ### 2. WorldPolicies 적용 규칙
 
-- 현재: `(world_id, effective_tick)`과 `(world_id, version)` 모두 고유 제약이 없다. 같은 Tick·같은 version 정책이 여러 건 저장된다. `income_tax_rate`(-5, 99999)와 `welfare_amount`(-100)에도 범위 제약이 없다.
-- 규칙(제안):
-  - 한 World의 한 Tick에는 최종 정책 1건만 둔다. 같은 Tick의 후속 요청은 기존 행을 UPSERT로 덮어쓰고 `version`을 올린다.
+- 반영 전: `(world_id, effective_tick)`과 `(world_id, version)` 모두 고유 제약이 없었다. 같은 Tick·같은 version 정책이 여러 건 저장됐다. `income_tax_rate`(-5, 99999)와 `welfare_amount`(-100)에도 범위 제약이 없었다.
+- 반영된 제약 (코드 기준):
+  - `uq_world_policies_world_id_effective_tick`: `UNIQUE (world_id, effective_tick)`
+  - `uq_world_policies_world_id_version`: `UNIQUE (world_id, version)`
+  - `ck_world_policies_income_tax_rate_range`: `CHECK (income_tax_rate BETWEEN 0 AND 10000)`
+  - `ck_world_policies_welfare_amount_non_negative`: `CHECK (welfare_amount >= 0)`
+- 규칙 (서비스 코드 미구현, 규칙만 정의):
+  - 한 World의 한 Tick에는 최종 정책 1건만 둔다. 같은 Tick의 후속 요청은 기존 행을 UPSERT로 덮어쓰고 `version`을 올린다. 이 UPSERT 규칙은 아직 구현된 서비스 코드가 없다(`app/services`는 빈 패키지).
   - `version`은 World 안에서 단조 증가하며, 정책 적용 순서는 `(effective_tick, version)`이다.
-- 제안 제약:
-  - `UNIQUE (world_id, effective_tick)`
-  - `UNIQUE (world_id, version)`
-  - `CHECK (income_tax_rate BETWEEN 0 AND 10000)`
-  - `CHECK (welfare_amount >= 0)`
 
 ### 3. 경제 거래·고용 상태 정합성
 
-- 현재: 아래 상태들이 서로 맞지 않아도 DB가 받아들인다. 이를 맞출 서비스·엔진 코드도 아직 없다(`app/services`, `app/crud`는 빈 패키지이고, 엔진 `systems/*`는 스텁이다).
+- 반영 전: 아래 상태들이 서로 맞지 않아도 DB가 받아들였다. 이를 맞출 서비스·엔진 코드도 아직 없다(`app/services`, `app/crud`는 빈 패키지이고, 엔진 `systems/*`는 스텁이다).
   - 합계가 0이 아닌 거래와 원장 줄이 없는 거래를 저장할 수 있다.
   - 원장 줄을 넣어도 `accounts.balance`가 바뀌지 않는다.
-  - `citizens.employer_id`, `employments`, `companies.employee_count`가 서로 어긋날 수 있다. `employee_count`는 정원을 넘는 값이나 음수도 허용된다.
+  - `citizens.employer_id`, `employments`, `companies.employee_count`가 서로 어긋날 수 있다. 반영 전에는 `employee_count`가 정원을 넘는 값이나 음수도 허용됐다.
 - 규칙:
   - 거래 1건은 `transactions` 기록, `ledger_entries` 생성, `accounts.balance` 갱신을 한 DB 트랜잭션에서 처리한다(10.4 서비스 규칙).
   - 고용·해고 1건은 `employments` 행, `citizens.employment_status`/`employer_id`, `companies.employee_count`를 한 DB 트랜잭션에서 갱신한다. `employments`는 이력이고, `citizens`의 두 컬럼은 빠른 조회를 위한 현재 상태 캐시다.
-- DB 보강 후보: `CHECK (employee_count BETWEEN 0 AND employee_capacity)`, 합계 0을 검사하는 지연 제약 트리거(TBD).
+- 반영된 제약 (코드 기준): `ck_companies_employee_count_range`: `CHECK (employee_count BETWEEN 0 AND employee_capacity)`
+- DB 보강 후보: 합계 0을 검사하는 지연 제약 트리거(TBD). 아직 반영하지 않았다.
 
 ### 적용 방법
 
-`DB_AUTO_SYNC`의 `create_all`은 이미 존재하는 테이블에 제약을 추가하지 않는다. 위 제약을 기존 DB에 반영하려면 alembic 마이그레이션이 먼저 필요하다(10.2, TBD).
+`DB_AUTO_SYNC`의 `create_all`은 없는 테이블만 만들고, 이미 존재하는 테이블에는 제약을 추가하지 않는다. 따라서 새 DB나 빈 DB에는 위 제약이 모두 적용되지만, 기존 DB에는 적용되지 않는다. 기존 DB에 반영하려면 alembic 마이그레이션이 먼저 필요하다(alembic: TBD, 10.2 참조).
 
 ### Event Sourcing 범위
 

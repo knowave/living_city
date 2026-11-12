@@ -131,3 +131,23 @@ def test_health_with_unreachable_db(monkeypatch):
     with TestClient(app) as c:
         r = c.get("/api/v1/health")
     assert r.status_code == 200 and r.json() == {"status": "ok"}
+
+
+def _checks(t):
+    return {c.name: str(c.sqltext) for c in t.constraints if isinstance(c, CheckConstraint)}
+
+
+def test_proposed_constraints():
+    e = _t("employments")
+    idx = {i.name: i for i in e.indexes}["uq_employments_world_citizen_active"]
+    assert idx.unique and [c.name for c in idx.columns] == ["world_id", "citizen_id"]
+    assert "WHERE terminated_tick IS NULL" in str(CreateIndex(idx).compile(dialect=PG))
+    assert _checks(e)["ck_employments_status_terminated"] == "(status = 'ACTIVE') = (terminated_tick IS NULL)"
+    p = _t("world_policies")
+    u = _uniques(p)
+    assert u["uq_world_policies_world_id_effective_tick"] == ("world_id", "effective_tick")
+    assert u["uq_world_policies_world_id_version"] == ("world_id", "version")
+    ck = _checks(p)
+    assert ck["ck_world_policies_income_tax_rate_range"] == "income_tax_rate BETWEEN 0 AND 10000"
+    assert ck["ck_world_policies_welfare_amount_non_negative"] == "welfare_amount >= 0"
+    assert _checks(_t("companies"))["ck_companies_employee_count_range"] == "employee_count BETWEEN 0 AND employee_capacity"

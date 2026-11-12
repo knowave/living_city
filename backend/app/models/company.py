@@ -1,7 +1,7 @@
 import uuid
 from enum import StrEnum
 
-from sqlalchemy import BigInteger, ForeignKey, ForeignKeyConstraint, Integer, String, UniqueConstraint, Uuid
+from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, ForeignKeyConstraint, Integer, String, UniqueConstraint, Uuid
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import BaseEntity
@@ -19,6 +19,7 @@ class Company(BaseEntity):
     __table_args__ = (
         UniqueConstraint("world_id", "id", name="uq_companies_world_id_id"),
         ForeignKeyConstraint(["world_id", "building_id"], ["buildings.world_id", "buildings.id"], ondelete="RESTRICT", name="fk_companies_building_id"),
+        CheckConstraint("employee_count BETWEEN 0 AND employee_capacity", name="ck_companies_employee_count_range"),
     )
 
     world_id: Mapped[uuid.UUID] = mapped_column(Uuid, ForeignKey("worlds.id", ondelete="RESTRICT"), index=True)
