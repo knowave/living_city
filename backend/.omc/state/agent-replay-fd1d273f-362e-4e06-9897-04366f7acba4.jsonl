@@ -40,3 +40,26 @@
 {"t":0,"agent":"adocs-d","agent_type":"docs-db-worker","event":"agent_stop","success":true,"duration_ms":4146}
 {"t":0,"agent":"ae7353d","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
 {"t":0,"agent":"a3cd34b","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"oh-my-claudecode:team"}
+{"t":0,"agent":"aapi-do","agent_type":"api-docs-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aapi-do","agent_type":"api-docs-worker","event":"agent_stop","success":true,"duration_ms":28816}
+{"t":0,"agent":"acontra","agent_type":"contracts-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"acontra","agent_type":"contracts-worker","event":"agent_stop","success":true,"duration_ms":51455}
+{"t":0,"agent":"aservic","agent_type":"service-impl-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"arepo-i","agent_type":"repo-impl-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aapi-im","agent_type":"api-impl-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"arepo-i","agent_type":"repo-impl-worker","event":"agent_stop","success":true,"duration_ms":57048}
+{"t":0,"agent":"aservic","agent_type":"service-impl-worker","event":"agent_stop","success":true,"duration_ms":76133}
+{"t":0,"agent":"aapi-im","agent_type":"api-impl-worker","event":"agent_stop","success":true,"duration_ms":95565}
+{"t":0,"agent":"aapi-do","agent_type":"api-docs-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"acontra","agent_type":"contracts-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"arepo-i","agent_type":"repo-impl-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aservic","agent_type":"service-impl-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aapi-im","agent_type":"api-impl-worker","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aapi-do","agent_type":"api-docs-worker","event":"agent_stop","success":true,"duration_ms":2378}
+{"t":0,"agent":"acontra","agent_type":"contracts-worker","event":"agent_stop","success":true,"duration_ms":2789}
+{"t":0,"agent":"aservic","agent_type":"service-impl-worker","event":"agent_stop","success":true,"duration_ms":2363}
+{"t":0,"agent":"aapi-im","agent_type":"api-impl-worker","event":"agent_stop","success":true,"duration_ms":2445}
+{"t":0,"agent":"arepo-i","agent_type":"repo-impl-worker","event":"agent_stop","success":true,"duration_ms":2837}
+{"t":0,"agent":"a92e170","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"a3d7b3f","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}

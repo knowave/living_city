@@ -1,13 +1,30 @@
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from sqlalchemy.exc import OperationalError
 
 from app.api.v1.api import api_router
 from app.core.config import settings
+from app.core.exceptions import (
+    ConflictError,
+    DomainError,
+    DomainValidationError,
+    InvalidStateError,
+    NotFoundError,
+)
 
 logger = logging.getLogger(__name__)
+
+_DOMAIN_STATUS: dict[type[DomainError], int] = {
+    NotFoundError: 404,
+    ConflictError: 409,
+    InvalidStateError: 409,
+    DomainValidationError: 422,
+}
 
 
 @asynccontextmanager
@@ -24,5 +41,28 @@ async def lifespan(_: FastAPI):
     yield
 
 
+async def domain_error_handler(_: Request, exc: DomainError) -> JSONResponse:
+    status = next((code for cls, code in _DOMAIN_STATUS.items() if isinstance(exc, cls)), 400)
+    error = {"code": exc.code, "message": exc.message}
+    if exc.details is not None:
+        error["details"] = jsonable_encoder(exc.details)
+    return JSONResponse(status_code=status, content={"error": error})
+
+
+async def validation_error_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Invalid request",
+                "details": jsonable_encoder(exc.errors()),
+            }
+        },
+    )
+
+
 app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.add_exception_handler(DomainError, domain_error_handler)
+app.add_exception_handler(RequestValidationError, validation_error_handler)

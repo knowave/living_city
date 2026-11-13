@@ -1,34 +1,144 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1794382003308,
+  "lastScanned": 1794483964712,
   "projectRoot": "/Users/ian/private/living_city/backend",
   "techStack": {
-    "languages": [],
-    "frameworks": [],
-    "packageManager": "",
-    "runtime": ""
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml",
+          "requirements.txt"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": "pip",
+    "runtime": null
   },
   "build": {
-    "buildCommand": "",
-    "testCommand": "",
-    "lintCommand": "",
-    "devCommand": "",
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
     "scripts": {}
   },
   "conventions": {
     "namingStyle": null,
     "importStyle": null,
-    "testPattern": "",
-    "fileOrganization": ""
+    "testPattern": null,
+    "fileOrganization": null
   },
   "structure": {
     "isMonorepo": false,
     "workspaces": [],
-    "mainDirectories": [],
+    "mainDirectories": [
+      "app",
+      "tests"
+    ],
     "gitBranches": null
   },
   "customNotes": [],
-  "directoryMap": {},
+  "directoryMap": {
+    "alembic": {
+      "path": "alembic",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1794483964700,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 2,
+      "lastAccessed": 1794483964700,
+      "keyFiles": [
+        "__init__.py",
+        "main.py"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 4,
+      "lastAccessed": 1794483964703,
+      "keyFiles": [
+        "__init__.py",
+        "test_architecture.py",
+        "test_health.py",
+        "test_models.py"
+      ]
+    },
+    "app/api": {
+      "path": "app/api",
+      "purpose": "API routes",
+      "fileCount": 2,
+      "lastAccessed": 1794483964704,
+      "keyFiles": [
+        "__init__.py",
+        "deps.py"
+      ]
+    },
+    "app/models": {
+      "path": "app/models",
+      "purpose": "Data models",
+      "fileCount": 15,
+      "lastAccessed": 1794483964705,
+      "keyFiles": [
+        "__init__.py",
+        "account.py",
+        "building.py"
+      ]
+    },
+    "app/schemas": {
+      "path": "app/schemas",
+      "purpose": "Schema definitions",
+      "fileCount": 4,
+      "lastAccessed": 1794483964705,
+      "keyFiles": [
+        "__init__.py",
+        "city.py",
+        "enums.py"
+      ]
+    },
+    "app/services": {
+      "path": "app/services",
+      "purpose": "Business logic services",
+      "fileCount": 3,
+      "lastAccessed": 1794483964705,
+      "keyFiles": [
+        "__init__.py",
+        "city_query_service.py",
+        "world_service.py"
+      ]
+    },
+    "tests/services": {
+      "path": "tests/services",
+      "purpose": "Business logic services",
+      "fileCount": 4,
+      "lastAccessed": 1794483964707,
+      "keyFiles": [
+        "__init__.py",
+        "fakes.py",
+        "test_city_query_service.py"
+      ]
+    }
+  },
   "hotPaths": [
     {
       "path": ".env",
@@ -38,8 +148,8 @@
     },
     {
       "path": "app/api/deps.py",
-      "accessCount": 1.999951336475806,
-      "lastAccessed": 1794384545472,
+      "accessCount": 1.9255304430925628,
+      "lastAccessed": 1794480588796,
       "type": "file"
     },
     {
@@ -70,6 +180,12 @@
       "path": "app/models/map_chunk.py",
       "accessCount": 1,
       "lastAccessed": 1794389169503,
+      "type": "file"
+    },
+    {
+      "path": "app/api/v1/endpoints/worlds.py",
+      "accessCount": 1,
+      "lastAccessed": 1794480588982,
       "type": "file"
     }
   ],

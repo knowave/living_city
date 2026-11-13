@@ -12,7 +12,27 @@
 
 - 테이블/컬럼 네이밍: 테이블은 복수형 snake_case, 컬럼은 snake_case, 제약 이름은 `uq_`/`idx_`/`fk_`/`ck_` 접두사를 쓴다. 상세는 [데이터 저장 설계 §10.3](../03-architecture/06-database.md). (코드 기준: backend/app/models/*.py)
 
+- JSON 필드명은 snake_case다.
+
+## 에러 응답 형식
+
+```json
+{"error": {"code": "WORLD_NOT_FOUND", "message": "...", "details": ...}}
+```
+
+`details`는 선택이다.
+
+| 예외 | HTTP |
+|---|---|
+| `NotFoundError` | 404 |
+| `ConflictError` | 409 |
+| `InvalidStateError` | 409 |
+| `DomainValidationError` | 422 |
+| 요청 검증 실패 | 422, code `VALIDATION_ERROR`, `details`에 오류 목록 |
+
+- controller에는 try/except를 두지 않는다. 전역 핸들러가 `app/main.py`에서 위 형식으로 변환한다.
+
 ## 미정
 
 - 마이그레이션 파일 규칙: TBD
-- 에러 응답 형식, 인증: TBD
+- 인증: TBD
