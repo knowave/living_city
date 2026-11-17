@@ -17,10 +17,23 @@ Living City는 독립적인 시민, 기업, 정부가 상호작용하면서 도�
 
 ```
 living_city/
-├── backend/             # FastAPI 서버
-├── simulation_engine/   # 시뮬레이션 엔진 (Pure Python, 표준 라이브러리만)
-├── frontend/            # PixiJS + React 클라이언트 (Vite 기반 골격)
-└── docs/                # 설계 문서
+├── CLAUDE.md
+├── docs/
+│
+├── simulation_engine/       # Pure Python
+│   └── citizens, companies, economy, time progression
+│
+├── backend/                 # FastAPI
+│   └── REST API, SSE, DB integration
+│
+└── frontend/                # React + TypeScript
+    ├── UI                   # 대시보드, 정보 패널
+    └── 3D Rendering Engine  # Three.js
+        ├── city-map
+        ├── buildings
+        ├── citizens
+        ├── camera
+        └── animation
 ```
 
 ## 실행 방법
