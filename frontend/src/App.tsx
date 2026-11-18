@@ -1,3 +1,9 @@
+import { CityScene } from './render/CityScene'
+
 export default function App() {
-  return <h1 className="p-4 text-3xl font-bold">Living City</h1>
+  return (
+    <div className="h-screen w-screen">
+      <CityScene />
+    </div>
+  )
 }

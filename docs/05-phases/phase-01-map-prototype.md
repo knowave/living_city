@@ -2,13 +2,13 @@
 > 원본: README §12 Phase 1(프로젝트 기반), Phase 2(렌더링 기반)
 
 ## 목표
-개발 환경과 테스트 기반을 갖추고, PixiJS로 타일·도로 맵을 렌더링하며 카메라 이동·줌과 타일 선택을 제공한다.
+개발 환경과 테스트 기반을 갖추고, Three.js(React Three Fiber)로 지형·도로·건물을 OrthographicCamera 시점에서 렌더링하며 카메라 이동·줌과 타일 선택을 제공한다.
 
 ## 작업
 - Repository 구성과 개발 환경 설정
 - 테스트 기반 구성
-- PixiJS 초기화
-- 타일 및 도로 렌더링
+- Three.js/R3F 씬 초기화
+- 지형·도로·건물 렌더링 (OrthographicCamera)
 - 카메라 이동 및 줌
 - 타일 선택
 

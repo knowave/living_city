@@ -14,12 +14,12 @@
 
 ### Phase 2. Isometric 렌더링
 
-- PixiJS 초기화
-- 타일 및 도로 렌더링
+- Three.js/R3F 씬 초기화
+- 지형·도로·건물 렌더링 (OrthographicCamera)
 - 카메라 이동 및 줌
 - 타일 선택
 - Chunk Manager
-- 건물 렌더링 및 깊이 정렬
+- 건물 렌더링 (3D 깊이 버퍼)
 
 완료 기준: 도시 맵을 자유롭게 탐색하고 건물을 선택할 수 있음
 
@@ -87,8 +87,8 @@
 | Phase 1: 도메인 모델 확정, 엔진 입력 및 출력 인터페이스 정의 | [phase-04](../05-phases/phase-04-simulation-engine.md) |
 | Phase 1: 경제 거래 모델 확정 | [phase-05](../05-phases/phase-05-economic-system.md) |
 | Phase 1: Repository 구성과 개발 환경 설정, 테스트 기반 구성 | [phase-01](../05-phases/phase-01-map-prototype.md) |
-| Phase 2: PixiJS 초기화, 타일 및 도로 렌더링, 카메라 이동 및 줌, 타일 선택 | [phase-01](../05-phases/phase-01-map-prototype.md) |
-| Phase 2: Chunk Manager, 건물 렌더링 및 깊이 정렬 | [phase-02](../05-phases/phase-02-chunk-rendering.md) |
+| Phase 2: Three.js/R3F 씬 초기화, 지형·도로·건물 렌더링, 카메라 이동 및 줌, 타일 선택 | [phase-01](../05-phases/phase-01-map-prototype.md) |
+| Phase 2: Chunk Manager, 건물 렌더링 (3D 깊이 버퍼) | [phase-02](../05-phases/phase-02-chunk-rendering.md) |
 | Phase 3: 전체 | [phase-04](../05-phases/phase-04-simulation-engine.md) |
 | Phase 4: 전체 | [phase-05](../05-phases/phase-05-economic-system.md) |
 | Phase 5: REST 및 SSE 통합 전체 | 향후 phase (미정) |

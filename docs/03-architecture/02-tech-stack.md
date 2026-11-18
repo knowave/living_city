@@ -18,7 +18,7 @@
 | simulation_engine | 의존성 | 런타임 의존성 없음 (표준 라이브러리만, 엔진 코드와 테스트 모두) | simulation_engine/pyproject.toml |
 | simulation_engine | 패키지 관리 | setuptools 메타데이터만 (lock 파일 없음, 테스트는 `uv run --no-project`로 실행) | simulation_engine/pyproject.toml (코드 기준) |
 | simulation_engine | 테스트 | unittest (Python 3.12 필요: `StrEnum` 사용) | simulation_engine/tests/ (코드 기준) |
-| frontend | 렌더링 | PixiJS 8 (2.5D Isometric), @pixi/tilemap, pixi-viewport | README §8, §14, frontend/package.json (코드 기준) |
+| frontend | 렌더링 | three, @react-three/fiber, @react-three/drei (Three.js 3D 씬, 고정 각도 OrthographicCamera로 Isometric 시점) | README 디렉터리 구조, frontend/package.json, frontend/src/render/ (코드 기준) |
 | frontend | UI | React 19, Tailwind CSS 4 (`@tailwindcss/vite`) | frontend/package.json (코드 기준) |
 | frontend | 언어 | TypeScript ~7.0.2 (`tsc -b`로 빌드 검사) | frontend/package.json, tsconfig.app.json (코드 기준) |
 | frontend | 빌드·개발 서버 | Vite ^8.3.6 (`/api` → localhost:8000 프록시) | frontend/vite.config.ts (코드 기준) |

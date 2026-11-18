@@ -40,8 +40,8 @@
 
 ## 05-phases
 
-- [phase-01-map-prototype](05-phases/phase-01-map-prototype.md): 프로젝트 기반, PixiJS 초기화, 타일·도로, 카메라, 타일 선택
-- [phase-02-chunk-rendering](05-phases/phase-02-chunk-rendering.md): Chunk Manager, 건물 렌더링과 깊이 정렬, 512x512 검증
+- [phase-01-map-prototype](05-phases/phase-01-map-prototype.md): 프로젝트 기반, Three.js/R3F 초기화, 지형·도로·건물, 카메라, 타일 선택
+- [phase-02-chunk-rendering](05-phases/phase-02-chunk-rendering.md): Chunk Manager, 건물 렌더링, 512x512 검증
 - [phase-03-citizen-movement](05-phases/phase-03-citizen-movement.md): 시민 이동 시각화
 - [phase-04-simulation-engine](05-phases/phase-04-simulation-engine.md): 도메인·엔진 인터페이스, 시뮬레이션 엔진
 - [phase-05-economic-system](05-phases/phase-05-economic-system.md): 경제 시스템
@@ -77,8 +77,8 @@
 
 | 파일 | 원본 출처 |
 |---|---|
-| [phase-01-map-prototype](05-phases/phase-01-map-prototype.md) | Phase 1 프로젝트 기반, Phase 2 PixiJS 초기화, 타일·도로, 카메라, 타일 선택 |
-| [phase-02-chunk-rendering](05-phases/phase-02-chunk-rendering.md) | Phase 2 Chunk Manager, 건물 렌더링·깊이 정렬, 512×512 검증 |
+| [phase-01-map-prototype](05-phases/phase-01-map-prototype.md) | Phase 1 프로젝트 기반, Phase 2 Three.js/R3F 초기화, 지형·도로·건물, 카메라, 타일 선택 |
+| [phase-02-chunk-rendering](05-phases/phase-02-chunk-rendering.md) | Phase 2 Chunk Manager, 건물 렌더링, 512×512 검증 |
 | [phase-03-citizen-movement](05-phases/phase-03-citizen-movement.md) | Phase 6 시민 이동 시각화, §4.4, §8.4 |
 | [phase-04-simulation-engine](05-phases/phase-04-simulation-engine.md) | Phase 1 도메인·엔진 인터페이스, Phase 3 전체 |
 | [phase-05-economic-system](05-phases/phase-05-economic-system.md) | Phase 4 전체 |

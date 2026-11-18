@@ -4,11 +4,11 @@ AI 에이전트용 개발 지침. 사람용 소개는 [README.md](README.md), �
 
 ## 프로젝트 요약
 
-Living City는 시민·기업·정부가 상호작용하며 도시 경제가 스스로 변화하는 자율 도시 시뮬레이션 웹 서비스다. backend는 FastAPI, 시뮬레이션 엔진은 Pure Python, frontend는 PixiJS + React, 통신은 REST + SSE다. `docs/`가 설계의 단일 출처(source of truth)다.
+Living City는 시민·기업·정부가 상호작용하며 도시 경제가 스스로 변화하는 자율 도시 시뮬레이션 웹 서비스다. backend는 FastAPI, 시뮬레이션 엔진은 Pure Python, frontend는 Three.js(React Three Fiber) + React, 통신은 REST + SSE다. `docs/`가 설계의 단일 출처(source of truth)다.
 
 ## 핵심 원칙
 
-- 계층 책임 분리: 엔진은 도메인 규칙, FastAPI는 외부 명령과 상태 조회, PixiJS는 시각적 표현을 맡는다 ([설계 원칙](docs/01-product/01-overview.md)).
+- 계층 책임 분리: 엔진은 도메인 규칙, FastAPI는 외부 명령과 상태 조회, Three.js는 시각적 표현을 맡는다 ([설계 원칙](docs/01-product/01-overview.md)).
 - 엔진은 프레임워크 독립: `simulation_engine`은 FastAPI, SQLAlchemy, PostgreSQL을 import하지 않는다 ([시뮬레이션 엔진](docs/03-architecture/03-simulation-engine.md)).
 - 화폐는 정수형 최소 단위만 쓴다. 부동소수점으로 저장하지 않는다 ([경제](docs/02-domain/06-economy.md)).
 - 자금 보존: 초기 세계 생성 이후 모든 자금 이동은 계정 간 이전 거래이며, 합계가 임의로 변하면 안 된다 ([경제](docs/02-domain/06-economy.md), [시뮬레이션 규칙](docs/02-domain/07-simulation-rules.md)).
@@ -42,7 +42,7 @@ Phase 문서: [phase-01-map-prototype](docs/05-phases/phase-01-map-prototype.md)
 |---|---|---|
 | `backend/` | FastAPI 서버. REST/SSE, DB 저장, Simulation Runner. 구조는 `app/{api/v1,core,crud,db,models,schemas,services,utils}` | 일부 구현 (14개 ORM 모델, DB 세션, `GET /api/v1/health`. crud·schemas·services·utils는 빈 패키지) (코드 기준) |
 | `simulation_engine/` | 도메인 규칙만 담은 Pure Python 엔진 | 일부 구현 (entities, economy, world, policies 등. engine·systems는 골격) (코드 기준) |
-| `frontend/` | PixiJS 렌더링과 React UI | 골격 있음 (Vite + React 기본 앱, map·render·stores·api는 빈 디렉터리) (코드 기준) |
+| `frontend/` | 3D 렌더링 모듈(src/render: city-map, buildings, camera) 프로토타입과 React UI | 골격 있음 (Vite + React 기본 앱, stores·api는 빈 디렉터리) (코드 기준) |
 
 컨벤션은 [01-common-convention](docs/04-development/01-common-convention.md), [02-backend-convention](docs/04-development/02-backend-convention.md), [03-frontend-convention](docs/04-development/03-frontend-convention.md), [04-simulation-convention](docs/04-development/04-simulation-convention.md), [05-api-convention](docs/04-development/05-api-convention.md)을 따른다.
 
