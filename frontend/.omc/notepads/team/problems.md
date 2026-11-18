@@ -1,1 +1,2 @@
 - 2026-11-17 lc-3d-render: OMC MCP 서버 연결 실패로 state를 .omc/state/*.json에 수동 기록. 워커 화면 검증 누락 → 리드가 CDP 헤드리스 스크린샷으로 격자선 색 문제(지형과 동일색) 발견·수정.
+- 2026-11-18 3d-render-gaps: lead's spec named data file buildings.ts beside Buildings.tsx → case-insensitive FS collision on macOS; renamed to buildingData.ts.
