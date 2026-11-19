@@ -94,3 +94,25 @@ MVP에서는 규칙 기반 의사결정과 가중치 확률을 사용한다.
 
 사용자가 브라우저를 닫더라도 시민의 논리적 이동은 정상적으로 진행된다.
 
+#### 이동 시간 규칙
+
+- `TILES_PER_TICK = 40`: 시뮬레이션 1 Tick당 시민이 이동할 수 있는 타일 수(도메인 규칙).
+- `arrivalTick = departureTick + max(1, ceil((|x2 - x1| + |y2 - y1|) / TILES_PER_TICK))`
+- (x1, y1), (x2, y2)는 출발·도착 건물 입구 도로 타일 좌표다. 실제 경로 길이가 아니라 맨해튼 거리를 쓴다. 경로가 길면 화면상 속도가 빨라 보일 수 있으며 초기에는 허용한다.
+- 이 계산은 Python 시뮬레이션 엔진이 소유한다. 프론트엔드는 출발·도착 Tick을 받아 표현만 한다.
+- Python 참고 시그니처(이번 phase에서 엔진 코드는 수정하지 않는다): `calculate_arrival_tick(departure_tick, origin, destination, speed=40)`
+- Phase 3 프론트엔드의 동일 공식 구현은 Mock 엔진 안의 임시 코드이며 영구 도메인 로직이 아니다. Phase 4~5에서 엔진 값으로 대체한다.
+
+#### 이동 이벤트(프론트엔드 가정)
+
+SSE `citizen.movement.started`의 제안 payload다. 백엔드는 아직 정의하지 않았다.
+
+```json
+{ "citizen_id": "...", "from_building_id": "...", "to_building_id": "...", "start_tick": 0, "arrival_tick": 0 }
+```
+
+#### TBD
+
+- 실제 시간으로 1 Tick이 몇 초인가: TBD. Phase 3 Mock은 10초, 배속 x1/x4/x16을 쓴다.
+- `employment_status`, `current_activity` 값 목록: TBD. Mock은 EMPLOYED/UNEMPLOYED, IDLE/MOVING을 임시로 쓰고, 모르는 값은 기본색으로 표시한다.
+

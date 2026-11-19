@@ -9,7 +9,7 @@ describe('tileRectToWorld', () => {
   it('maps a footprint rect to its center', () => {
     expect(tileRectToWorld(2, 4, 4, 2)).toEqual([4, 0, 5])
   })
-  it('puts the map center at (32, 0, 32)', () => {
-    expect(MAP_CENTER).toEqual([32, 0, 32])
+  it('puts the map center at (256, 0, 256)', () => {
+    expect(MAP_CENTER).toEqual([256, 0, 256])
   })
 })

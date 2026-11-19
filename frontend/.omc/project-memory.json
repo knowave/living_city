@@ -15,6 +15,13 @@
       "context": "OMC 상태·스펙·플랜·핸드오프·노트패드 등 모든 .omc 산출물은 frontend 루트의 .omc 하위에만 작성. 서브디렉토리(src/, public/ 등)에서 작업하더라도 workingDirectory는 frontend 루트로 지정할 것.",
       "source": "explicit",
       "priority": "high"
+    },
+    {
+      "timestamp": 1794993300308,
+      "directive": "모든 프롬프트 응답과 문서 작성은 한국어로 한다. 코드 식별자, 명령어, 파일 경로, 에러 원문은 원문 그대로 둔다.",
+      "context": "사용자 요청(2026-11-18): 이 디렉터리에서 작업하는 모든 에이전트는 사용자 응답, 보고, 문서(md, 스펙, 플랜, 핸드오프, 노트패드)를 한국어로 작성한다.",
+      "source": "explicit",
+      "priority": "high"
     }
   ]
 }

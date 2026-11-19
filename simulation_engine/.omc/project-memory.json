@@ -74,6 +74,13 @@
       "context": "simulation_engine 구현 작업 시 OMC 상태/스펙/플랜/핸드오프 등 모든 .omc 산출물은 simulation_engine 루트의 .omc 하나에만 기록한다. 작업 디렉토리가 하위 폴더여도 workingDirectory를 simulation_engine 루트로 지정한다.",
       "source": "explicit",
       "priority": "high"
+    },
+    {
+      "timestamp": 1794993300308,
+      "directive": "모든 프롬프트 응답과 문서 작성은 한국어로 한다. 코드 식별자, 명령어, 파일 경로, 에러 원문은 원문 그대로 둔다.",
+      "context": "사용자 요청(2026-11-18): 이 디렉터리에서 작업하는 모든 에이전트는 사용자 응답, 보고, 문서(md, 스펙, 플랜, 핸드오프, 노트패드)를 한국어로 작성한다.",
+      "source": "explicit",
+      "priority": "high"
     }
   ]
 }

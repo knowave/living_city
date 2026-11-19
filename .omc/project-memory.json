@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "projectRoot": "/Users/ian/private/living_city",
+  "techStack": {},
+  "build": {},
+  "conventions": {},
+  "structure": {},
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [],
+  "userDirectives": [
+    {
+      "timestamp": 1794993234913,
+      "directive": "모든 프롬프트 응답과 문서 작성은 한국어로 한다. 코드 식별자, 명령어, 파일 경로, 에러 원문은 원문 그대로 둔다.",
+      "context": "사용자 요청(2026-11-18): 이 디렉터리에서 작업하는 모든 에이전트는 사용자 응답, 보고, 문서(md, 스펙, 플랜, 핸드오프, 노트패드)를 한국어로 작성한다.",
+      "source": "explicit",
+      "priority": "high"
+    }
+  ]
+}

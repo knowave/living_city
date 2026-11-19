@@ -178,6 +178,8 @@ CHECK
 | schema_version | Integer | N | 1 | 타일 포맷 버전 |
 | revision | Integer | N | 1 | 청크 수정 번호 |
 
+terrain_tiles, road_tiles 값의 의미(schema_version 1)는 [맵 및 렌더링 설계](04-map-rendering.md)의 "타일 스키마 v1"을 따른다.
+
 CHECK: `chunk_x >= 0`, `chunk_y >= 0`, `chunk_size = 32`, `schema_version >= 1`, `revision >= 1`, `jsonb_typeof(terrain_tiles) = 'array'`, `jsonb_typeof(road_tiles) = 'array'`, `jsonb_array_length(terrain_tiles) = 1024`, `jsonb_array_length(road_tiles) = 1024`.
 
 유니크/인덱스: `uq_map_chunks_world_id_id` (world_id, id), `uq_map_chunks_position` unique (world_id, chunk_x, chunk_y). buildings는 map_chunks를 FK로 참조하지 않는다. 타일 인덱스 = `local_y * 32 + local_x`.

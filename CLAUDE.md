@@ -42,7 +42,7 @@ Phase 문서: [phase-01-map-prototype](docs/05-phases/phase-01-map-prototype.md)
 |---|---|---|
 | `backend/` | FastAPI 서버. REST/SSE, DB 저장, Simulation Runner. 구조는 `app/{api/v1,core,crud,db,models,schemas,services,utils}` | 일부 구현 (14개 ORM 모델, DB 세션, `GET /api/v1/health`. crud·schemas·services·utils는 빈 패키지) (코드 기준) |
 | `simulation_engine/` | 도메인 규칙만 담은 Pure Python 엔진 | 일부 구현 (entities, economy, world, policies 등. engine·systems는 골격) (코드 기준) |
-| `frontend/` | 3D 렌더링 모듈(src/render: city-map, buildings, camera) 프로토타입과 React UI | 골격 있음 (Vite + React 기본 앱, stores·api는 빈 디렉터리) (코드 기준) |
+| `frontend/` | 3D 렌더링 모듈(src/render: city-map, buildings, camera) 프로토타입과 React UI | 골격 있음 (Vite + React 기본 앱, stores·api는 빈 디렉터리). 시민 모듈 `src/render/citizens/`(Mock)은 Phase 3 진행 중 (코드 기준) |
 
 컨벤션은 [01-common-convention](docs/04-development/01-common-convention.md), [02-backend-convention](docs/04-development/02-backend-convention.md), [03-frontend-convention](docs/04-development/03-frontend-convention.md), [04-simulation-convention](docs/04-development/04-simulation-convention.md), [05-api-convention](docs/04-development/05-api-convention.md)을 따른다.
 

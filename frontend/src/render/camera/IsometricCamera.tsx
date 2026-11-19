@@ -15,7 +15,7 @@ const POSITION: [number, number, number] = [
   MAP_CENTER[2] + OFFSET[2],
 ]
 
-export const MIN_ZOOM = 6
+export const MIN_ZOOM = 12
 export const MAX_ZOOM = 60
 
 interface ClampTarget {
@@ -33,17 +33,23 @@ function clampToMap({ target, object }: ClampTarget) {
   target.z = z
 }
 
+// Module-scope so its identity is stable: drei re-connects controls whenever onChange changes, which drops in-progress drags.
+const onControlsChange = (e?: { target: unknown }) => {
+  if (e) clampToMap(e.target as ClampTarget)
+}
+
 export function IsometricCamera() {
   return (
     <>
-      <OrthographicCamera makeDefault position={POSITION} zoom={14} near={0.1} far={1000} />
+      <OrthographicCamera makeDefault position={POSITION} zoom={20} near={0.1} far={1000} />
       <MapControls
+        makeDefault
         target={MAP_CENTER}
         enableRotate={false}
         zoomToCursor
         minZoom={MIN_ZOOM}
         maxZoom={MAX_ZOOM}
-        onChange={(e) => e && clampToMap(e.target as ClampTarget)}
+        onChange={onControlsChange}
       />
     </>
   )

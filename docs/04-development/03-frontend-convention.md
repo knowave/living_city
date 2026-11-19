@@ -25,7 +25,8 @@
 ## 디렉터리 구조 (코드 기준)
 
 - `src/App.tsx`, `src/main.tsx`(StrictMode, QueryClientProvider 설정), `src/index.css`
-- `src/render/`: 3D 렌더링 모듈 루트. `city-map/`(지형, 도로), `buildings/`, `camera/`를 두고 `citizens/`, `animation/`은 이후 추가한다. (README 디렉터리 구조)
+- `src/render/`: 3D 렌더링 모듈 루트. `city-map/`(지형, 도로), `buildings/`, `camera/`를 두고 `citizens/`(Phase 3, 시민 렌더링·이동), `animation/`은 이후 추가한다. (README 디렉터리 구조)
+- 시민처럼 프레임마다 바뀌는 상태(위치, 방향)는 React state가 아니라 컴포넌트 밖 typed array에 두고 `useFrame`에서 갱신한다. 패널의 휘발 값은 ref/`textContent`로 갱신하며, 선택 변경 외에는 React를 다시 렌더링하지 않는다.
 - `src/stores/`, `src/api/`: 빈 폴더 (`.gitkeep`만 있음)
 - `src/map/`, `public/maps/`는 제거했다 (타일 맵 파일 포맷을 쓰지 않는다). `public/favicon.svg`
 

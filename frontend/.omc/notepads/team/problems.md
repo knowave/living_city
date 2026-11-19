@@ -1,2 +1,6 @@
 - 2026-11-17 lc-3d-render: OMC MCP 서버 연결 실패로 state를 .omc/state/*.json에 수동 기록. 워커 화면 검증 누락 → 리드가 CDP 헤드리스 스크린샷으로 격자선 색 문제(지형과 동일색) 발견·수정.
 - 2026-11-18 3d-render-gaps: lead's spec named data file buildings.ts beside Buildings.tsx → case-insensitive FS collision on macOS; renamed to buildingData.ts.
+- 2026-11-18 chunk-rendering: generator hit the 3,000-building floor only after raising placement prob 0.35→0.7 (4,778 buildings; plan target 6–12k not met).
+- 2026-11-18 chunk-rendering: T4 had to add ChunkManager.activeKeys() (outside its ownership) because the plan's debug-hook contract needed it but T3's interface lacked it.
+- 2026-11-18 controls-stuck-fix: CDP check suite missed stuck MapControls because no criterion did consecutive real-mouse drags >0.5s; added AC12 and proved it FAILs on the re-created bug.
+- 2026-11-19 phase3-citizens: p3-verify backgrounded the perf-table run and went idle without reporting (twice); a fresh worker told to run it in the foreground finished in one pass.

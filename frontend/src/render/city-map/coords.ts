@@ -1,4 +1,6 @@
-export const MAP_SIZE = 64
+import { MAP_SIZE } from '../map/tiles'
+
+export { MAP_SIZE }
 
 export type Vec3 = [x: number, y: number, z: number]
 
