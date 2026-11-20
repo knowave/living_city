@@ -1,0 +1,19 @@
+{
+ "active": false,
+ "current_phase": "complete",
+ "state": {
+  "team_name": "engine-v1-checklist",
+  "task": "사용자 체크리스트 9개 독립 검증 (읽기 전용)",
+  "fix_loop_count": 0,
+  "max_fix_loops": 3,
+  "linked_ralph": false,
+  "stage_history": "team-verify:2026-11-20,complete:2026-11-20",
+  "workers": [
+   "v-status",
+   "v-events",
+   "v-shopping",
+   "v-snapshot",
+   "v-regression"
+  ]
+ }
+}

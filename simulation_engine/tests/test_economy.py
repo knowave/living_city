@@ -93,6 +93,7 @@ class EnumValueTest(unittest.TestCase):
             {
                 "OPENING_BALANCE", "SALARY", "PURCHASE", "INCOME_TAX", "RENT", "WELFARE",
                 "ACCOUNT_TRANSFER", "CAPITAL_INVESTMENT", "ADJUSTMENT", "REVERSAL",
+                "OPERATING_EXPENSE", "PUBLIC_PROCUREMENT", "EXPORT",
             },
         )
         for e in (*OT, *AccountType, *TransactionType):

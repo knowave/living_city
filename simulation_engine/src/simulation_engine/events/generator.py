@@ -1,1 +1,10 @@
-"""System이 생성하는 이벤트를 만드는 책임을 담는다."""
+"""Domain Event 유형 문자열. sequence 부여는 TickContext.emit이 한다."""
+
+SIMULATION_TICK = "simulation.tick"
+SIMULATION_STATUS_CHANGED = "simulation.status.changed"
+CITIZEN_EMPLOYMENT_CHANGED = "citizen.employment.changed"
+CITIZEN_MOVEMENT_STARTED = "citizen.movement.started"
+COMPANY_STATUS_CHANGED = "company.status.changed"
+ECONOMY_MONTH_CLOSED = "economy.month.closed"
+METRICS_UPDATED = "metrics.updated"
+POLICY_UPDATED = "policy.updated"

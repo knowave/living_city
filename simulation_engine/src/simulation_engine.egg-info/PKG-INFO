@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: simulation-engine
+Version: 0.1.0
+Summary: Living City 시뮬레이션 엔진 (Pure Python, 표준 라이브러리만 사용)
+Requires-Python: >=3.12

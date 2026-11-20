@@ -114,5 +114,51 @@ SSE `citizen.movement.started`의 제안 payload다. 백엔드는 아직 정의�
 #### TBD
 
 - 실제 시간으로 1 Tick이 몇 초인가: TBD. Phase 3 Mock은 10초, 배속 x1/x4/x16을 쓴다.
-- `employment_status`, `current_activity` 값 목록: TBD. Mock은 EMPLOYED/UNEMPLOYED, IDLE/MOVING을 임시로 쓰고, 모르는 값은 기본색으로 표시한다.
 
+### 4.5 엔진 v1 행동 규칙
+
+엔진 v1([phase-06](../05-phases/phase-06-simulation-engine-v1.md))의 상태 값과 하루 일과다. 수치는 설정값이다.
+
+#### 상태 값
+
+| 필드 | 값 | 설명 |
+|---|---|---|
+| employment_status | EMPLOYED, UNEMPLOYED | 활성 고용 관계 유무 |
+| current_activity | AT_HOME, MOVING, WORKING, SHOPPING | 현재 활동 |
+| happiness, health | 초기값 50, 100 | v1에서는 초기값만 보유하고 변하지 않는다. 행복도 변화 규칙은 v1에서 제외한다 |
+
+엔진은 이 4개 값만 낸다. IDLE은 frontend Mock 전용이다.
+
+- 목적지는 `current_activity`가 아니라 `current_destination`(건물 id)으로 구분한다.
+- 시민은 `arrival_tick`에 목적지에 도착한다. 도착 전까지 MOVING이다.
+- Phase 3 Mock의 IDLE 값은 이 목록과 다르다. 엔진 연동 시 맞춘다.
+
+#### 하루 일과
+
+| 시각 | 취업자 | 실직자 |
+|---|---|---|
+| 08시 | 집에서 출발 (MOVING). 도착 시 WORKING. 소비 이동 중이면 그날 출근을 건너뛴다 | AT_HOME 유지 |
+| 18시 | 직장에서 귀가 출발 (MOVING). 도착 시 AT_HOME | AT_HOME 유지 |
+| 19시 이후 | 소비 출발 조건을 만족하면 소비 출발 ([소비 규칙](#소비-규칙)) | 소비 출발 조건 적용 |
+
+- 취업자 활동 흐름: AT_HOME → MOVING → WORKING → MOVING → AT_HOME.
+- 소비 활동 흐름: AT_HOME → MOVING → SHOPPING → MOVING → AT_HOME.
+- 이동 도착 Tick은 §4.4 공식을 따른다.
+- 소비 이동은 출근보다 우선하지 않는다. 소비 이동 중에 08시가 되면 그날 출근만 건너뛴다. 급여에는 영향이 없다.
+
+#### 소비 규칙
+
+- 소비일: Tick의 시각이 19시 이상이면 그 날짜, 아니면 전날이다.
+- 소비일 하루에 최대 1회 소비한다.
+- 소비 출발 조건: 소비일에 아직 소비하지 않았고, 19시 이후에 집에 있거나 19시 이후에 집에 도착했다. 자정을 넘겨도 된다. 마감 시각은 없다.
+- 소비 출발 시 시민별 `last_shop_day`를 소비일로 기록한다 ([03-simulation-engine §7.10](../03-architecture/03-simulation-engine.md)).
+- 소비 대상은 운영 중(ACTIVE·DISTRESSED) RETAIL·RESTAURANT 중 시드 RNG로 고른 기업이다.
+- 월 소비 예산은 월 1회 월말 정산 직후 계산한다. 월 예산 = ⌊지난달 세후 소득 × consumption_preference ÷ 10000⌋ + ⌊max(0, 보유 현금 − 생활 예비금) × 추가 소비율 ÷ 10000⌋.
+- 보유 현금은 월말 급여·복지 직후 값이다. 이후 정산 단계는 시민 현금을 바꾸지 않으므로 채용·해고 뒤 현금과 같다. 계산한 예산은 엔진 내부 값 `monthly_budget`에 저장하고 다음 달 소비에 쓴다.
+- 일 소비액 = min(잔액, ⌊월 예산 ÷ 30⌋). 소비액이 0원이면 외출하지 않는다.
+- 생활 예비금은 1,000,000원, 추가 소비율은 3000bps(30%)다. 보정으로 정한 설정값이다.
+- 이유: 소득 기준 소비만 있으면 시민 저축이 계속 쌓여 기업으로 돌아오지 않는다. 누적 현금에 비례한 추가 소비로 이 누수를 막는다.
+- 지난달 세후 소득 = 세후 급여 + 복지금.
+- 첫 달 예산은 세계 생성 시 같은 식으로 계산한다. 이때 지난달 소득은 취업자 월급의 85%(실직자는 0)이고, 보유 현금은 초기 현금이다.
+- 소비 거래는 PURCHASE이며 시민 CASH에서 기업 CASH로 이동한다. 상점 도착 Tick에 거래하고 SHOPPING 상태로 그 Tick을 마친 뒤, 다음 Tick 시작에 귀가를 출발한다. 화면에서 쇼핑 중인 시민이 보이도록 상점에 1 Tick 머문다 (2026-11-19 결정).
+- 변경 이유: 128×128 맵에서 19시까지 귀가하는 취업자가 약 16%뿐이라서, 19시 고정 시각 대신 소비일 기준으로 바꿨다.

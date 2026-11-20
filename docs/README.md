@@ -45,6 +45,7 @@
 - [phase-03-citizen-movement](05-phases/phase-03-citizen-movement.md): 시민 이동 시각화
 - [phase-04-simulation-engine](05-phases/phase-04-simulation-engine.md): 도메인·엔진 인터페이스, 시뮬레이션 엔진
 - [phase-05-economic-system](05-phases/phase-05-economic-system.md): 경제 시스템
+- [phase-06-simulation-engine-v1](05-phases/phase-06-simulation-engine-v1.md): 시뮬레이션 엔진 v1 (Pure Python, 시민·기업·정부 경제 상호작용, 결정적 실행)
 
 ## 원본 README 섹션 → 문서 대응표
 
@@ -82,5 +83,6 @@
 | [phase-03-citizen-movement](05-phases/phase-03-citizen-movement.md) | Phase 6 시민 이동 시각화, §4.4, §8.4 |
 | [phase-04-simulation-engine](05-phases/phase-04-simulation-engine.md) | Phase 1 도메인·엔진 인터페이스, Phase 3 전체 |
 | [phase-05-economic-system](05-phases/phase-05-economic-system.md) | Phase 4 전체 |
+| [phase-06-simulation-engine-v1](05-phases/phase-06-simulation-engine-v1.md) | 원본 없음 (엔진 v1 설계 인터뷰 스펙) |
 
 위 5개에 들어가지 않는 Phase 5(REST/SSE), Phase 6의 나머지 항목, Phase 7은 [04-roadmap](01-product/04-roadmap.md)에 "향후 phase"로 표시한다.

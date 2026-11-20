@@ -112,7 +112,7 @@ CHECK
 
 | 컬럼 | 타입 | nullable | 기본값 | 설명 |
 |---|---|---|---|---|
-| transaction_type | String(32) | N | | OPENING_BALANCE, SALARY, PURCHASE, INCOME_TAX, RENT, WELFARE, ACCOUNT_TRANSFER, CAPITAL_INVESTMENT, ADJUSTMENT, REVERSAL |
+| transaction_type | String(32) | N | | OPENING_BALANCE, SALARY, PURCHASE, INCOME_TAX, RENT, WELFARE, ACCOUNT_TRANSFER, CAPITAL_INVESTMENT, ADJUSTMENT, REVERSAL, OPERATING_EXPENSE, PUBLIC_PROCUREMENT, EXPORT |
 | tick | BigInteger | N | | 거래 발생 Tick |
 | idempotency_key | String(180) | N | | 멱등 키 |
 | description | Text | Y | | 설명 |

@@ -34,14 +34,14 @@ Living City는 시민·기업·정부가 상호작용하며 도시 경제가 스
 | 테스트 작성 | [06-testing-guide](docs/04-development/06-testing-guide.md) |
 | phase 단위 작업 | [05-phases](docs/05-phases/) 의 해당 phase 문서, 전체 흐름은 [04-roadmap](docs/01-product/04-roadmap.md) |
 
-Phase 문서: [phase-01-map-prototype](docs/05-phases/phase-01-map-prototype.md), [phase-02-chunk-rendering](docs/05-phases/phase-02-chunk-rendering.md), [phase-03-citizen-movement](docs/05-phases/phase-03-citizen-movement.md), [phase-04-simulation-engine](docs/05-phases/phase-04-simulation-engine.md), [phase-05-economic-system](docs/05-phases/phase-05-economic-system.md)
+Phase 문서: [phase-01-map-prototype](docs/05-phases/phase-01-map-prototype.md), [phase-02-chunk-rendering](docs/05-phases/phase-02-chunk-rendering.md), [phase-03-citizen-movement](docs/05-phases/phase-03-citizen-movement.md), [phase-04-simulation-engine](docs/05-phases/phase-04-simulation-engine.md), [phase-05-economic-system](docs/05-phases/phase-05-economic-system.md), [phase-06-simulation-engine-v1](docs/05-phases/phase-06-simulation-engine-v1.md)
 
 ## 디렉터리별 책임
 
 | 디렉터리 | 책임 | 상태 |
 |---|---|---|
 | `backend/` | FastAPI 서버. REST/SSE, DB 저장, Simulation Runner. 구조는 `app/{api/v1,core,crud,db,models,schemas,services,utils}` | 일부 구현 (14개 ORM 모델, DB 세션, `GET /api/v1/health`. crud·schemas·services·utils는 빈 패키지) (코드 기준) |
-| `simulation_engine/` | 도메인 규칙만 담은 Pure Python 엔진 | 일부 구현 (entities, economy, world, policies 등. engine·systems는 골격) (코드 기준) |
+| `simulation_engine/` | 도메인 규칙만 담은 Pure Python 엔진 | v1 구현 (세계 생성, Tick 엔진, 시민·경제 System, 지표, Snapshot. [phase-06](docs/05-phases/phase-06-simulation-engine-v1.md) 참조) (코드 기준) |
 | `frontend/` | 3D 렌더링 모듈(src/render: city-map, buildings, camera) 프로토타입과 React UI | 골격 있음 (Vite + React 기본 앱, stores·api는 빈 디렉터리). 시민 모듈 `src/render/citizens/`(Mock)은 Phase 3 진행 중 (코드 기준) |
 
 컨벤션은 [01-common-convention](docs/04-development/01-common-convention.md), [02-backend-convention](docs/04-development/02-backend-convention.md), [03-frontend-convention](docs/04-development/03-frontend-convention.md), [04-simulation-convention](docs/04-development/04-simulation-convention.md), [05-api-convention](docs/04-development/05-api-convention.md)을 따른다.
