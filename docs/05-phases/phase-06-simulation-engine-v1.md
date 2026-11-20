@@ -13,7 +13,7 @@ FastAPI·PostgreSQL 없이 Pure Python으로 동작하는 시뮬레이션 엔진
 - 검증: 단위 테스트, 결정성, Snapshot 복구, 경제 불변식, 36개월 보정.
 
 ## Non-Goals
-- 도로·MapChunk 생성과 경로 탐색 (frontend 담당).
+- 경로 탐색 (frontend 담당). 도로·MapChunk 생성은 backend 맵 생성기가 맡는다 ([맵 및 렌더링 설계 §8.5](../03-architecture/04-map-rendering.md), Backend Phase 3).
 - 주거비(RENT), 공급망 4단계(생산 능력·거래처 변경·원자재 부족), 외부 투자 유입, CLOSED 상태.
 - 신규 기업 설립. 파산은 비가역이며 장기 시뮬레이션의 알려진 한계다 ([알려진 한계](#알려진-한계)).
 - Simulation Runner, REST/SSE, DB 저장, 실시간 Tick 간격 (backend 영역).

@@ -19,6 +19,14 @@ from app.core.exceptions import (
 
 logger = logging.getLogger(__name__)
 
+# uvicorn configures only its own loggers; give app.* (runner cycle logs, measurements) an INFO handler.
+_app_logger = logging.getLogger("app")
+if not _app_logger.handlers:
+    _handler = logging.StreamHandler()
+    _handler.setFormatter(logging.Formatter("%(levelname)s:     %(name)s: %(message)s"))
+    _app_logger.addHandler(_handler)
+    _app_logger.setLevel(logging.INFO)
+
 _DOMAIN_STATUS: dict[type[DomainError], int] = {
     NotFoundError: 404,
     ConflictError: 409,
@@ -38,7 +46,15 @@ async def lifespan(_: FastAPI):
             Base.metadata.create_all(bind=engine)
         except OperationalError as e:
             logger.warning("DB auto-sync skipped, database unreachable: %s", e.__cause__ or e)
+    manager = None
+    if settings.RUNNER_ENABLED:
+        from app.api.deps import build_runner_manager
+
+        manager = build_runner_manager()
+        manager.start()
     yield
+    if manager is not None:
+        await manager.stop()
 
 
 async def domain_error_handler(_: Request, exc: DomainError) -> JSONResponse:

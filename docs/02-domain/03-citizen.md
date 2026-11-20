@@ -113,7 +113,7 @@ SSE `citizen.movement.started`의 제안 payload다. 백엔드는 아직 정의�
 
 #### TBD
 
-- 실제 시간으로 1 Tick이 몇 초인가: TBD. Phase 3 Mock은 10초, 배속 x1/x4/x16을 쓴다.
+- 실제 시간으로 1 Tick이 몇 초인가: TBD. Phase 3 Mock은 10초, 배속 x1/x4/x16을 쓴다. backend Runner 기본값은 1초(`RUNNER_TICK_INTERVAL_MS`로 설정 가능)다. 측정 후 확정한다.
 
 ### 4.5 엔진 v1 행동 규칙
 

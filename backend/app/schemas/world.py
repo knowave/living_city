@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -42,6 +43,15 @@ class PolicyRead(BaseModel):
     version: int
 
 
+class RunnerStatusRead(BaseModel):
+    state: Literal["running", "retrying", "stopped"]
+    consecutive_failures: int
+    last_error: str | None = None
+    last_compute_ms: float | None = None
+    last_persist_ms: float | None = None
+    last_tick: int | None = None
+
+
 class WorldStateRead(BaseModel):
     world_id: uuid.UUID
     status: WorldStatus
@@ -49,6 +59,7 @@ class WorldStateRead(BaseModel):
     speed: int
     event_cursor: int  # max world_events.sequence (0 if none)
     current_policy: PolicyRead
+    runner: RunnerStatusRead | None = None
 
 
 class SimulationUpdate(BaseModel):
@@ -59,3 +70,18 @@ class SimulationUpdate(BaseModel):
 class PolicyUpdate(BaseModel):
     income_tax_rate: int | None = None
     welfare_amount: int | None = None
+
+
+class TickAdvanceRequest(BaseModel):
+    count: int = Field(ge=1, le=720)
+    expected_tick: int = Field(ge=0)
+
+
+class TickAdvanceRead(BaseModel):
+    from_tick: int
+    to_tick: int
+    event_count: int
+    last_event_sequence: int
+    transaction_count: int
+    compute_ms: float | None = None
+    persist_ms: float | None = None

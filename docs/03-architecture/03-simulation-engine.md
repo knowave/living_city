@@ -101,6 +101,42 @@ MVP에서는 하나의 서버 프로세스가 세계별 실행 소유권을 관�
 
 향후 멀티 인스턴스 환경에서는 별도 Worker와 분산 실행 소유권 제어를 도입한다.
 
+> backend 현황 (코드 기준): Runner가 구현되었다. RUNNING인 World의 Tick은 Runner가 자동으로 진행한다. `POST /worlds/{id}/ticks`로 수동 진행도 가능하다. 같은 세계의 동시 실행은 PG advisory lock(실행 소유권), `worlds` 행 잠금(`FOR UPDATE NOWAIT`)과 `worlds.version` 검사, `expected_tick` 검사로 막는다. 요청 값이 `current_tick`과 다르면 실행하지 않고 409 `TICK_MISMATCH`를 돌려준다.
+
+### 7.4.1 Runner 구조
+
+- `RunnerManager`는 `RUNNER_DISCOVERY_INTERVAL_MS`(기본 1000 ms)마다 RUNNING World 목록을 조회한다. 아직 소유하지 않은 World에는 소유권을 시도하고, 성공하면 그 World의 `WorldRunner`를 시작한다.
+- `WorldRunner`는 World마다 하나다. `RUNNER_TICK_INTERVAL_MS`(기본 1000 ms) 주기마다 `advance_running`을 한 번 호출한다. 한 주기에 `speed`(1·4·16)만큼 진행하고, 커밋은 1회, Snapshot은 1개다.
+- Catch-up은 없다. 처리가 주기보다 길어지면 다음 주기를 바로 시작하되, 밀린 Tick을 보충하지 않는다.
+- PAUSED·ARCHIVED로 바뀐 World는 다음 주기에 `WORLD_NOT_RUNNING`(409)을 받고 멈추며, 그때 소유권을 놓는다.
+- Runner는 엔진과 ORM을 직접 다루지 않고 use case(`advance_running`)만 호출한다. 계층 규칙은 [02-backend-convention](../04-development/02-backend-convention.md)을 따른다.
+
+### 7.4.2 소유권 (PG advisory lock)
+
+- World를 맡을 때 Runner는 전용 DB 연결에서 `pg_try_advisory_lock(key)`을 잡고, 실행하는 동안 유지한다. 잡지 못하면 다른 프로세스가 소유한 것이므로 실행하지 않는다.
+- 키는 `world_id`의 앞 8바이트를 signed int64로 바꾼 값이다. 충돌 가능성은 무시할 만하다고 본다.
+- advisory lock은 세션 범위이므로 연결을 계속 붙잡고 있어야 한다. 프로세스가 죽거나 연결이 끊기면 잠금이 자동으로 풀리고, 다른 프로세스가 발견 주기에 다시 시도해 이어받는다.
+- 정확성의 최종 방어선은 `expected_tick`과 `worlds` 행 잠금이다. 소유권은 실행 자격을 정할 뿐이다.
+
+### 7.4.3 장애 분류
+
+| 오류 | Runner 동작 | World 상태 |
+|---|---|---|
+| 엔진 불변식 오류 (`SIMULATION_FAILED`) | Runner 종료 | `FAILED` |
+| `TICK_MISMATCH` | `details.current_tick`으로 `expected_tick`을 맞추고 바로 이어 진행 | 유지 (`RUNNING`) |
+| `SNAPSHOT_MISMATCH` | 해당 World의 Runner만 중지, 오류 기록 | 유지 (`RUNNING`) |
+| `WORLD_NOT_RUNNING`, World 없음 (`NotFoundError`) | 정상 중지 | 유지 |
+| 일시 오류: DB 연결 `OperationalError` 계열, `WORLD_BUSY`, `CONCURRENT_UPDATE`, 그 밖의 `DomainError`와 `DomainError`가 아닌 예외 | 1초부터 2배씩 늘려 최대 `RUNNER_BACKOFF_MAX_MS`(기본 30000 ms)까지 기다리고, 무기한 재시도 | 유지 (`RUNNING`) |
+
+- 엔진 불변식 오류만 World를 `FAILED`로 만든다. 나머지 오류는 World 상태를 바꾸지 않는다.
+
+### 7.4.4 재시작, 종료, Runner 상태
+
+- 프로세스를 재시작하면 Runner는 마지막 커밋 Tick(`worlds.current_tick`)에서 이어 간다. 커밋되지 않은 Tick은 없었던 일이므로 중복 이벤트 sequence나 거래가 생기지 않는다. 밀린 Tick은 보충하지 않는다.
+- 정상 종료: 앱 종료 시 새 주기를 막고, 진행 중인 주기가 끝나기를 `RUNNER_SHUTDOWN_TIMEOUT_MS`(기본 10000 ms)까지 기다린다. 그 뒤 잠금을 풀고 연결을 닫는다.
+- 주기마다 INFO 로그를 남긴다(world_id, ticks, compute_ms, persist_ms). `compute_ms`는 엔진 계산 시간, `persist_ms`는 저장·커밋 시간이다.
+- Runner 상태(`running`·`retrying`·`stopped`, 연속 실패 수, 마지막 오류, 마지막 측정값, 마지막 Tick)는 `GET /worlds/{id}/state`의 `runner` 필드로 보인다. 이 프로세스가 소유하지 않은 World는 `runner`가 `null`이다.
+
 ## 7.5 엔진 구성
 
 System 중심 구조를 채택한다. 경량 ECS 아이디어와 도메인 중심 설계를 함께 쓰며, 완전한 ECS는 아니다.
@@ -212,5 +248,5 @@ simulation_engine/
 
 ### 미정 (TBD)
 
-- 엔진 재시작 정책 세부: TBD (backend 영역).
-- 동시 실행 제어 세부 (7.4 이상): TBD (backend 영역).
+- 엔진 재시작 정책 (해결, backend Runner): backend는 최신 Snapshot에서 복원한다. `snapshot.tick`이 `worlds.current_tick`과 다르면 409 `SNAPSHOT_MISMATCH`를 돌려주고, 해당 World의 Runner만 멈춘다. 엔진 예외가 나면 세계는 `FAILED`가 되고 Runner는 끝난다. 프로세스를 재시작하면 Runner는 마지막 커밋 Tick에서 이어 간다(§7.4.4).
+- 동시 실행 제어 (backend, 해결): `worlds` 행 잠금(`/ticks` NOWAIT, PATCH 최대 5초 대기)과 `expected_tick`으로 막는다. 여러 프로세스가 Runner를 돌릴 때의 실행 소유권은 PG advisory lock으로 정했다(§7.4.2). 별도 Worker나 Redis 등 분산 오케스트레이션은 후속 과제로 남는다.

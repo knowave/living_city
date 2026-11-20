@@ -8,6 +8,7 @@ dependencies = [
     "pydantic-settings",
     "sqlalchemy>=2.1.8",
     "psycopg[binary]>=3.3.8",
+    "simulation-engine",
 ]
 
 [dependency-groups]
@@ -15,3 +16,12 @@ dev = ["pytest", "httpx"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+markers = [
+    "integration: requires local PostgreSQL",
+    "soak: long-running (8640+ ticks); skipped by default, run with `pytest -m soak`",
+    "perf: report-only p95 latency measurement; skipped by default, run with `pytest -m perf -s`",
+]
+addopts = '-m "not soak and not perf"'  # a later `-m soak` on the command line overrides this
+
+[tool.uv.sources]
+simulation-engine = { path = "../simulation_engine", editable = true }

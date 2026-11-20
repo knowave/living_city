@@ -7,7 +7,7 @@ from app.schemas.city import ChunkRangeQuery, ChunkRead, CitizenRead, CompanyRea
 from app.schemas.enums import AccountOwnerType, MetricCode, MetricPeriod, MetricUnit
 from app.schemas.world import WorldCreate
 from app.services import CityQueryService, WorldService
-from tests.services.fakes import FakeUnitOfWork
+from tests.services.fakes import FakeEnginePort, FakeUnitOfWork
 
 
 @pytest.fixture
@@ -17,7 +17,7 @@ def uow():
 
 @pytest.fixture
 def wid(uow):
-    return WorldService(uow, "0").create_world(WorldCreate(name="w")).id
+    return WorldService(uow, FakeEnginePort(), "0").create_world(WorldCreate(name="w")).id
 
 
 @pytest.fixture
@@ -88,7 +88,7 @@ def test_citizen_missing_balance_none(svc, uow, wid):
 
 
 def test_citizen_other_world_and_unknown(svc, uow, wid):
-    other = WorldService(uow, "0").create_world(WorldCreate(name="o")).id
+    other = WorldService(uow, FakeEnginePort(), "0").create_world(WorldCreate(name="o")).id
     c = citizen(other)
     uow.citizens.items.append(c)
     for cid in (c.id, uuid.uuid4()):

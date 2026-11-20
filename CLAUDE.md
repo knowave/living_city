@@ -40,7 +40,7 @@ Phase 문서: [phase-01-map-prototype](docs/05-phases/phase-01-map-prototype.md)
 
 | 디렉터리 | 책임 | 상태 |
 |---|---|---|
-| `backend/` | FastAPI 서버. REST/SSE, DB 저장, Simulation Runner. 구조는 `app/{api/v1,core,crud,db,models,schemas,services,utils}` | 일부 구현 (14개 ORM 모델, DB 세션, `GET /api/v1/health`. crud·schemas·services·utils는 빈 패키지) (코드 기준) |
+| `backend/` | FastAPI 서버. REST/SSE, DB 저장, Simulation Runner. 구조는 `app/{api/v1,core,db,models,repositories,runner,schemas,services,simulation,usecases,utils}` | 일부 구현 (14개 ORM 모델, repositories/usecases/services 계층, REST 10개(+health), 엔진 연동(세계 생성·수동 Tick 진행·영속화), Runner(자동 Tick 진행) 구현. SSE 미구현) (코드 기준) |
 | `simulation_engine/` | 도메인 규칙만 담은 Pure Python 엔진 | v1 구현 (세계 생성, Tick 엔진, 시민·경제 System, 지표, Snapshot. [phase-06](docs/05-phases/phase-06-simulation-engine-v1.md) 참조) (코드 기준) |
 | `frontend/` | 3D 렌더링 모듈(src/render: city-map, buildings, camera) 프로토타입과 React UI | 골격 있음 (Vite + React 기본 앱, stores·api는 빈 디렉터리). 시민 모듈 `src/render/citizens/`(Mock)은 Phase 3 진행 중 (코드 기준) |
 

@@ -180,6 +180,8 @@ CHECK
 
 terrain_tiles, road_tiles 값의 의미(schema_version 1)는 [맵 및 렌더링 설계](04-map-rendering.md)의 "타일 스키마 v1"을 따른다.
 
+**생성 시점**: map_chunks는 세계 생성(`POST /worlds`)과 같은 DB 트랜잭션에서 256개를 함께 저장한다. 맵 생성이나 검증이 실패하면 세계와 Chunk를 모두 저장하지 않는다. 맵 생성 전에 만든 세계는 `uv run python -m app.maps.backfill`(backend/에서 실행)로 채운다. 맵이 이미 있는 세계는 건너뛰므로 여러 번 실행해도 결과가 같다. 맵 생성 규칙은 [맵 및 렌더링 설계 §8.5](04-map-rendering.md)를 따른다.
+
 CHECK: `chunk_x >= 0`, `chunk_y >= 0`, `chunk_size = 32`, `schema_version >= 1`, `revision >= 1`, `jsonb_typeof(terrain_tiles) = 'array'`, `jsonb_typeof(road_tiles) = 'array'`, `jsonb_array_length(terrain_tiles) = 1024`, `jsonb_array_length(road_tiles) = 1024`.
 
 유니크/인덱스: `uq_map_chunks_world_id_id` (world_id, id), `uq_map_chunks_position` unique (world_id, chunk_x, chunk_y). buildings는 map_chunks를 FK로 참조하지 않는다. 타일 인덱스 = `local_y * 32 + local_x`.
@@ -219,8 +221,8 @@ CHECK: `chunk_x >= 0`, `chunk_y >= 0`, `chunk_size = 32`, `schema_version >= 1`,
   - `uq_world_policies_world_id_version`: `UNIQUE (world_id, version)`
   - `ck_world_policies_income_tax_rate_range`: `CHECK (income_tax_rate BETWEEN 0 AND 10000)`
   - `ck_world_policies_welfare_amount_non_negative`: `CHECK (welfare_amount >= 0)`
-- 규칙 (서비스 코드 미구현, 규칙만 정의):
-  - 한 World의 한 Tick에는 최종 정책 1건만 둔다. 같은 Tick의 후속 요청은 기존 행을 UPSERT로 덮어쓰고 `version`을 올린다. 이 UPSERT 규칙은 아직 구현된 서비스 코드가 없다(`app/services`는 빈 패키지).
+- 규칙:
+  - 한 World의 한 Tick에는 최종 정책 1건만 둔다. 같은 Tick의 후속 요청은 기존 행을 UPSERT로 덮어쓰고 `version`을 올린다. `PATCH /policies`가 넣는 행은 적용 대기 행이며, 다음 Tick 진행 때 엔진이 만든 정책 행(같은 effective_tick)으로 교체된다.
   - `version`은 World 안에서 단조 증가하며, 정책 적용 순서는 `(effective_tick, version)`이다.
 
 ### 3. 경제 거래·고용 상태 정합성
@@ -241,8 +243,29 @@ CHECK: `chunk_x >= 0`, `chunk_y >= 0`, `chunk_size = 32`, `schema_version >= 1`,
 
 ### Event Sourcing 범위
 
-`world_events`와 `world_snapshots`가 있다고 해서 완전한 Event Sourcing이 되지는 않는다(10.2). 이 범위는 아래 둘 중 하나를 정해야 확정된다.
-- Snapshot 기준 재개: 마지막 Snapshot과 그 이후 `world_events`만 있으면 된다.
-- 이벤트만으로 재구성: 모든 상태 변경에 결정적 재실행이 가능한 입력(정책 명령, 시드, 엔진 버전)이 이벤트로 남아야 한다.
+결정: **Snapshot 기준 재개** (2026-11-20 사용자 승인). 마지막 Snapshot과 그 이후 행이 재개 기준이다. 이벤트만으로 상태를 재구성하지 않는다.
 
-어느 쪽으로 할지는 TBD이다.
+## 10.6 엔진 영속화 규칙
+
+엔진 출력(엔티티 7종, 거래, 원장, 이벤트, 지표, Snapshot)을 저장하는 규칙이다.
+
+- id 재매핑: 엔진이 만든 모든 행(정책, 건물, 가구, 기업, 시민, 고용, 계좌, 거래, 원장, 이벤트, 지표, Snapshot)의 DB id는 `uuid5(worlds.id, str(engine_id))`다. 엔진 id가 시드로만 정해져 세계 간 PK가 충돌하기 때문이다. 변환은 엔진 → DB 한 방향이다.
+- 이벤트 `payload`에서 키가 `_id`로 끝나는 값은 DB id로 바꿔 저장한다.
+- `idempotency_key`와 Snapshot `state_data`는 엔진 id를 그대로 둔다. 복원은 `state_data`로 한다.
+- 요청 1회 = DB 트랜잭션 1개. N Tick 결과 전체와 마지막 Tick의 Snapshot 1개를 함께 저장하고, 실패하면 전체를 롤백한다.
+- 엔티티는 배치마다 재매핑한 id 기준으로 FK 순서에 맞춰 upsert한다.
+- 재개 시 최신 Snapshot의 tick은 `worlds.current_tick`과 같아야 한다. 다르면 409 `SNAPSHOT_MISMATCH`.
+- 동시성 제어: 같은 World에 대한 쓰기는 `worlds` 행 잠금과 `worlds.version` 검사로 직렬화한다 (이중 보호).
+  - `POST /ticks`: `SELECT … FOR UPDATE NOWAIT`. 이미 잠겨 있으면 즉시 409 `WORLD_BUSY`.
+  - `PATCH /policies`, `PATCH /simulation`: `FOR UPDATE`로 대기하며 `lock_timeout`은 `WORLD_LOCK_TIMEOUT_MS`(기본 5000 ms). 시간을 넘기면 409 `WORLD_BUSY`.
+  - 잠금은 DB 수준이므로 서버 프로세스가 여러 개여도 성립한다. 프로세스 내부 Lock에 의존하지 않는다.
+  - Runner 실행 소유권은 PG advisory lock으로 정한다. 키는 `world_id`의 앞 8바이트를 signed int64로 바꾼 값이다. 세션 범위 잠금이므로 소유한 World마다 전용 연결 1개를 유지한다([시뮬레이션 엔진 §7.4.2](03-simulation-engine.md)).
+  - 저장 중 유니크 위반(`IntegrityError`)은 500이 아니라 409 `CONCURRENT_UPDATE`로 바꾼다.
+- 조회 일관성: `GET /view`, 목록, `/summary`는 REPEATABLE READ 트랜잭션 하나에서 World 상태와 이벤트 커서(`event_cursor`)를 함께 읽는다. 응답의 `as_of_tick`과 `event_cursor`는 이 트랜잭션에서 읽은 값이다. 조회는 행 잠금을 잡지 않으므로 Runner의 쓰기를 막지 않는다(MVCC). 응답 형식은 [REST API 및 SSE §9.1](07-rest-sse.md)을 따른다.
+
+### Snapshot 보관 정책 (확정)
+
+- 세계마다 최신 `SNAPSHOT_KEEP_LATEST`개(기본 3)와 월말 Tick(`tick % 720 == 0`)의 Snapshot만 남긴다.
+- 나머지 Snapshot은 Tick 저장과 같은 트랜잭션에서 삭제한다. 수동 `POST /ticks`도 같은 규칙을 따른다.
+- 보관 정책은 `world_snapshots`에만 적용한다. `transactions`, `ledger_entries`, `world_events`, `world_metrics`는 Snapshot 정리와 무관하게 삭제하지 않고 기존 보관 정책을 따른다. 월말 Snapshot은 복원·재현용이며 감사 로그를 대신하지 않는다(감사 근거는 거래 원장과 Domain Event다).
+- 근거: Snapshot 한 개는 시민 100명 기준 약 133KB다. Tick마다 남기면 초당 1회 실행 시 하루 약 11.5GB가 쌓인다.

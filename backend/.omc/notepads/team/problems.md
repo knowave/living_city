@@ -1,0 +1,3 @@
+- 2026-11-20 engine-integration: OMC MCP(state_write/project_memory) 연결 실패로 팀 상태를 state 파일 대신 handoff 문서로만 기록했고, 한국어 문서 지시를 처음에 놓쳐 스펙을 다시 썼다.
+- 2026-11-20 engine-integration: docs-worker가 지시에 없는 "TBD 항목" 절을 06-database.md에 추가해 lead가 삭제했다.
+- 2026-11-20 runner: runner-worker가 lead의 배선 지시(NullPool 엔진·keep_latest)를 첫 보고 뒤에 반영했고, runner 로그가 uvicorn 실행 시 출력되지 않는 문제는 lead의 실제 서버 스모크에서야 발견됐다.
